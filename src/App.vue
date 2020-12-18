@@ -48,7 +48,7 @@ div.container
       div(class="aqi-detail" v-if="selectedAreaDataList.length !== 0 && detail.SiteName")
         div.aqi-detail-title
           h3 {{ detail.SiteName }}
-          p.bg-100.font-open-sans {{ detail.AQI }}
+          p(class="font-open-sans" :class="aqiColor(detail.AQI)") {{ detail.AQI }}
         div.aqi-detail-data
           ul
             li
@@ -100,6 +100,7 @@ export default {
   setup() {
     const store = useStore();
     store.dispatch('init');
+
     const counties = computed(() => store.getters.counties);
     const selectedAreaDataList = computed(() => store.getters.selectedAreaDataList);
     const lastUpdateTime = computed(() => store.getters.lastUpdateTime);
