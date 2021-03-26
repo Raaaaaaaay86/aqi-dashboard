@@ -1,7 +1,8 @@
 import { createStore } from 'vuex';
 import axios from 'axios';
 
-const api = `https://api.allorigins.win/get?url=${encodeURIComponent('http://opendata.epa.gov.tw/webapi/Data/REWIQA/?$orderby=SiteName&$skip=0&$top=1000&format=json')}`;
+const api = `https://api.allorigins.win/get?url=${encodeURIComponent('https://data.epa.gov.tw/api/v1/aqx_p_432?offset=0&limit=1000&api_key=68f55ed5-f6e4-49a1-8de1-373eb07bce09')}`;
+// const api = 'https://data.epa.gov.tw/api/v1/aqx_p_432?offset=0&limit=1000&api_key=68f55ed5-f6e4-49a1-8de1-373eb07bce09';
 const config = {
   headers: {
     Origin: 'http://localhost:8080',
@@ -19,9 +20,9 @@ export default createStore({
   actions: {
     async init({ commit }) {
       const res = await axios.get(api, {}, config);
-      const data = JSON.parse(res.data.contents);
-      commit('SET_COUNTIES', data);
-      commit('SET_ALL_DATA', data);
+      const { records } = JSON.parse(res.data.contents);
+      commit('SET_COUNTIES', records);
+      commit('SET_ALL_DATA', records);
       commit('SET_UPDATE_TIME');
     },
   },
